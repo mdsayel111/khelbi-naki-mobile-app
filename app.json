@@ -28,8 +28,8 @@
           "data": [
             {
               "scheme": "https",
-              "host": "khelbinaki-antopolis-xyz",
-              "pathPrefix": ".*"
+              "host": "my-custom-domain.ngrok.io",
+              "pathPrefix": "/records"
             }
           ],
           "category": [
