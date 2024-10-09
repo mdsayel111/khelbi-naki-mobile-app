@@ -5,13 +5,15 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useFonts } from "expo-font";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { SplashScreen } from "expo-router";
 import { Dimensions } from "react-native";
 import { AuthProvider } from "@/contexts/hooks/useAuthContext";
 import Toast from "react-native-toast-message";
 import Footer from "@/components/partials/layout/footer/Footer";
 import Navbar from "@/components/partials/layout/nav-bar/Navbar";
+import Text from "@/components/partials/element/CustomText";
+import * as Linking from 'expo-linking';
 
 
 // get screen size
@@ -31,53 +33,55 @@ const screenHeight = Dimensions.get('window').height;
 export default function Layout() {
 
   const navigation = useNavigation();
+  const [state, setState] = useState("")
 
-  // useEffect(() => {
-  //   // Retrieve the initial URL if the app was opened with a deep link
-  //   const getInitialUrl = async () => {
-  //     const initialUrl = await Linking.getInitialURL();
-  //     if (initialUrl) {
-  //       console.log('App opened with URL:', initialUrl);
-  //       handleUrl(initialUrl);
-  //     }
-  //   };
+  useEffect(() => {
+    // Retrieve the initial URL if the app was opened with a deep link
+    const getInitialUrl = async () => {
+      const initialUrl = await Linking.getInitialURL();
+      if (initialUrl) {
+        console.log('App opened with URL:', initialUrl);
+        handleUrl(initialUrl);
+      }
+    };
 
-  //   // Call the function to get the initial URL
-  //   getInitialUrl();
+    // Call the function to get the initial URL
+    getInitialUrl();
 
-  //   // Add an event listener to listen for incoming URLs when the app is already open
-  //   // const handleDeepLink = (event: { url: string }) => {
-  //   //   console.log('New URL received:', event.url);
-  //   //   handleUrl(event.url);
-  //   // };
+    // Add an event listener to listen for incoming URLs when the app is already open
+    // const handleDeepLink = (event: { url: string }) => {
+    //   console.log('New URL received:', event.url);
+    //   handleUrl(event.url);
+    // };
 
-  //   // const urlSubscription = Linking.addEventListener('url', handleDeepLink);
+    // const urlSubscription = Linking.addEventListener('url', handleDeepLink);
 
-  //   // Cleanup event listener on component unmount
-  //   return () => {
-  //     // urlSubscription.remove();
-  //   };
-  // }, []);
+    // Cleanup event listener on component unmount
+    return () => {
+      // urlSubscription.remove();
+    };
+  }, []);
 
   // // Parse the URL and navigate to the right screen
-  // const handleUrl = (url: string) => {
-  //   const parsedUrl = new URL(url);
-  //   const path = parsedUrl.pathname;  // Get the path
-  //   const segments = path.split('/').filter(Boolean);  // Split and filter empty values
+  const handleUrl = (url: string) => {
+    const parsedUrl = new URL(url);
+    const path = parsedUrl.pathname;  // Get the path
+    const segments = path.split('/').filter(Boolean);  // Split and filter empty values
 
-  //   // Check for '/register/jwt-token' pattern
-  //   if (segments[0] === 'register' && segments[1]) {
-  //     const token = segments[1];
-  //     // Navigate to Register screen with the token
-  //     navigation.navigate('Register', { token });
-  //   }
-  //   // Check for '/:id' pattern (MongoDB ID)
-  //   else if (segments[0]) {
-  //     const id = segments[0];
-  //     // Navigate to RecordDetails screen with the MongoDB ID
-  //     navigation.navigate('RecordDetails', { id });
-  //   }
-  // };
+    setState(path)
+    // // Check for '/register/jwt-token' pattern
+    // if (segments[0] === 'register' && segments[1]) {
+    //   const token = segments[1];
+    //   // Navigate to Register screen with the token
+    //   navigation.navigate('Register', { token });
+    // }
+    // // Check for '/:id' pattern (MongoDB ID)
+    // else if (segments[0]) {
+    //   const id = segments[0];
+    //   // Navigate to RecordDetails screen with the MongoDB ID
+    //   navigation.navigate('RecordDetails', { id });
+    // }
+  };
 
   // handle deep link
   // In your component or app entry point
@@ -147,21 +151,22 @@ export default function Layout() {
   }
 
   return (
-    <AuthProvider>
-      <SafeAreaView style={[styles.container]}>
-        {/* statusbar style */}
-        <StatusBar backgroundColor="black" barStyle="light-content" />
+    // <AuthProvider>
+    //   <SafeAreaView style={[styles.container]}>
+    //     {/* statusbar style */}
+    //     <StatusBar backgroundColor="black" barStyle="light-content" />
 
-        {/* drawer navbar */}
-        <Navbar />
+    //     {/* drawer navbar */}
+    //     <Navbar />
 
-        {/* footer */}
-        <Footer />
+    //     {/* footer */}
+    //     <Footer />
 
-        {/* toast */}
-        <Toast />
-      </SafeAreaView>
-    </AuthProvider>
+    //     {/* toast */}
+    //     <Toast />
+    //   </SafeAreaView>
+    // </AuthProvider>
+    <Text>{""}</Text>
   );
 }
 
